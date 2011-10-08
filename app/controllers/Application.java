@@ -2,6 +2,7 @@ package controllers;
 
 import play.*;
 import play.data.validation.Required;
+import play.db.jpa.JPABase;
 import play.mvc.*;
 
 import java.util.*;
@@ -17,7 +18,8 @@ public class Application extends Controller {
     	 if(Security.isConnected()) {
              String username = Security.connected();
              renderArgs.put("user", username);
-             render(username);
+             List<Game> games = Game.findAll();
+			render(username,games);
          }
     }
     
@@ -34,7 +36,9 @@ public class Application extends Controller {
             validation.keep();
     		createGamePage();
     	} else {
-    		index();
+    		Game game = Game.start(gameName, numberOfCards);
+    		game.save();
+    	    index();
     	}
     }
 
