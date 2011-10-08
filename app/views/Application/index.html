@@ -1,16 +1,6 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
-<h1>Hello, ${username} ...</h1>
+<h1>Welcome</h1>
 
-<a href='createGamePage'>Create a new game</a>
-
-<h2>Games</h2>
-
-<ul>
-    #{list items:games, as:'game' }
-        <li><a href='@{Application.showGame(game.id)}'>${game.name}</a></li>
-    #{/list}
-</ul>
-
-<a href='@{Secure.logout()}'>Logout</a>
+<a href="/mainPage">Login</a>

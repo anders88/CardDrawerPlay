@@ -1,0 +1,26 @@
+#{extends 'main.html' /}
+#{set title:'createGamePage.html' /}
+
+<h1>Create game</h1>
+#{ifErrors}
+   #{errors}
+       <li style="color:#c00">${error}</li>
+   #{/errors}
+   <br/>
+#{/ifErrors}
+
+<form action='@{Application.createGame()}' method='POST'>
+	<table>
+		<tr>
+			<td><label for='gameName'>Name</label></td>
+			<td><input type='text' name='gameName' id='gameName' value='${flash.gameName}'></td>
+		</tr>
+		<tr>
+			<td><label for='numberOfCards'>Number of cards</label></td>
+			<td><input type='number' id='numberOfCards' name='numberOfCards' value='${flash.numberOfCards}'></td>
+		</tr>
+		<tr>
+			<td><input type='submit' value='Create game' name='createGame'></td>
+		</tr>	
+	</table>
+</form>
