@@ -3,7 +3,6 @@ package model;
 import models.Game;
 import models.Player;
 
-import org.fest.assertions.Assertions;
 import org.junit.After;
 import org.junit.Test;
 
