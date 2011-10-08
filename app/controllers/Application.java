@@ -41,5 +41,10 @@ public class Application extends Controller {
     	    index();
     	}
     }
+    
+    public static void showGame(Long gameId) {
+    	Game game = Game.findById(gameId);
+    	render(game);
+    }
 
 }

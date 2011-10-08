@@ -9,6 +9,6 @@
 
 <ul>
     #{list items:games, as:'game' }
-        <li>${game.name}</li>
+        <li><a href='@{Application.showGame(game.id)}'>${game.name}</a></li>
     #{/list}
 </ul>
