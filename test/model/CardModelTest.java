@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import models.Card;
+import models.CardStatus;
 import models.Game;
 
 import org.junit.After;
@@ -35,6 +36,9 @@ public class CardModelTest extends UnitTest {
 		assertEquals(15, Card.findAll().size());
 		
 		assertEquals(5, gameOne.cards.size());
+		
+		List<Card> allCards = Card.findAll();
+		assertEquals(CardStatus.IN_DRAWPILE, allCards.get(0).cardStatus); 
 	}
 
 }

@@ -14,6 +14,9 @@ public class Card extends Model {
 	
     @ManyToOne
 	public Game game;
+    
+	public CardStatus cardStatus = CardStatus.IN_DRAWPILE;
+
 	
 	public static Card create(Game game, int cardNumber) {
 		Card card = new Card();
