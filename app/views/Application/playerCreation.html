@@ -1,0 +1,27 @@
+#{extends 'main.html' /}
+#{set title:'playerCreation.html' /}
+
+<h1>Create player</h1>
+
+#{ifErrors}
+   #{errors}
+       <li style="color:#c00">${error}</li>
+   #{/errors}
+   <br/>
+#{/ifErrors}
+
+<form action='@{Application.createPlayer()}' method='POST'>
+	<table>
+		<tr>
+			<td><label for='playerName'>Name</label></td>
+			<td><input type='text' name='playerName' id='playerName' value='${flash.playerName}'></td>
+		</tr>
+		<tr>
+			<td><label for='password'>Password</label></td>
+			<td><input type='password' id='password' name='password' value='${flash.numberOfCards}'></td>
+		</tr>
+		<tr>
+			<td><input type='submit' value='Create player' name='createPlayer'></td>
+		</tr>	
+	</table>
+</form>

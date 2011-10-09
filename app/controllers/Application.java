@@ -17,5 +17,25 @@ public class Application extends Controller {
     	render();
     }
     
+    public static void playerCreation() {
+    	render();
+    }
+    
+    public static void createPlayer(String playerName, String password) {
+    	validation.required(playerName).message("Name is required");
+       	validation.required(password).message("Password is required");
+       	if (Player.findWithName(playerName) != null) {
+       		validation.addError("playerName", "A player with that name already exsists");
+       	}
+       	if (validation.hasErrors()) {
+       		params.flash(); 
+            validation.keep();
+       		playerCreation();
+       	} else {
+       		Player.create(playerName, password).save();
+       	    GameController.index();
+       	}
+    }
+    
 
 }

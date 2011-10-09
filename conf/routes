@@ -8,6 +8,7 @@ GET     /                                       Application.index
 GET		/mainPage								GameController.index
 
 GET		/createGamePage							GameController.createGamePage
+GET		/createPlayer							Application.playerCreation
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

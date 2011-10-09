@@ -11,9 +11,16 @@ public class PlayerModelTest extends UnitTest {
 
     @Test
     public void shouldSaveAndFindPlayer() {
-        Player.create("Darth").save();
+        Player.create("Darth","password").save();
         assertNotNull(Player.findWithName("Darth"));
     }
+    
+    @Test
+	public void shouldValidatePassword() throws Exception {
+    	Player player = Player.create("Darth","password").save();
+    	assertTrue(player.validatePassword("password"));
+    	assertFalse(player.validatePassword("wrong"));
+	}
 
     @After
     public void cleanDb() {
