@@ -3,12 +3,18 @@ import static org.junit.Assert.*;
 import models.Player;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
+import play.test.Fixtures;
 import play.test.UnitTest;
 
 public class PlayerModelTest extends UnitTest {
-
+	@Before
+	public void setUp() {
+		Fixtures.deleteDatabase();
+	}
+	
     @Test
     public void shouldSaveAndFindPlayer() {
         Player.create("Darth","password").save();
@@ -21,10 +27,5 @@ public class PlayerModelTest extends UnitTest {
     	assertTrue(player.validatePassword("password"));
     	assertFalse(player.validatePassword("wrong"));
 	}
-
-    @After
-    public void cleanDb() {
-    	Player.deleteAll();
-    }
 
 }
