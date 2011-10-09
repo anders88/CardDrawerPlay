@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 
 import models.Game;
+import models.Player;
 import controllers.Secure;
 import controllers.Secure.Security;
 import play.mvc.*;
@@ -38,8 +39,9 @@ public class GameController extends Controller {
    }
    
    public static void showGame(Long gameId) {
+	Player player = Player.findWithName(Security.connected());
    	Game game = Game.findById(gameId);
-   	render(game);
+   	render(game, player);
    }
 
 }
