@@ -10,7 +10,6 @@ public class DbCardDealerLogger implements CardDealerLogger {
 
 	@Override
 	public void drewCard(int cardNumber, PlayerInfo player) {
-		// TODO Auto-generated method stub
 
 	}
 

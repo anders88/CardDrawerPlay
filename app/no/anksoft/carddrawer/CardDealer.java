@@ -43,9 +43,11 @@ public class CardDealer {
 
 
 	private int calculateCardsLeft() {
-		int num = highest;
-		for (Set<Integer> set : playerCards.values()) {
-			num-=set.size();
+		int num = 0;
+		for (CardStatus status : cardStatus) {
+			if (status == CardStatus.IN_DRAW_DECK) {
+				num++;
+			}
 		}
 		return num;
 	}

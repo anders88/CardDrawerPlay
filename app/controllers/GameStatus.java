@@ -1,5 +1,6 @@
 package controllers;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 
 import no.anksoft.carddrawer.CardDealer;
@@ -11,6 +12,8 @@ public class GameStatus {
 	private String gameName;
 	private int cardsInDrawpile;
 	private Collection<Integer> playerCards;
+	private Collection<Integer> discardedCards;
+	private Collection<Integer> outOfPlayCards;
 
 	public String hello() {
 		return "Game status says hello";
@@ -25,6 +28,8 @@ public class GameStatus {
 		gameStatus.gameName = game.name;
 		gameStatus.cardsInDrawpile = cardDealer.numberOfCardsInDrawpile();
 		gameStatus.playerCards = cardDealer.playerCards(player);
+		gameStatus.discardedCards = cardDealer.discardedCards();
+		gameStatus.outOfPlayCards = cardDealer.outOfPlayCards();
 		return gameStatus;
 	}
 
@@ -34,5 +39,13 @@ public class GameStatus {
 
 	public Collection<Integer> playerCards() {
 		return playerCards;
+	}
+
+	public Collection<Integer> discardedCards() {
+		return discardedCards;
+	}
+
+	public Collection<Integer> outOfPlayCards() {
+		return outOfPlayCards;
 	}
 }
