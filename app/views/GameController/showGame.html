@@ -5,7 +5,14 @@
 
 <h2>Player ${player.name}</h2>
 
-From game status x${gameStatus.hello()}x
+Cards left in drawpile ${gameStatus.cardsInDrawpile()}
+
+<h2>Your cards</h2>
+<ul>
+    #{list items:gameStatus.playerCards(), as:'playerCard' }
+    	<li>${playerCard}</li>
+    #{/list}
+</ul>
 
 <br/>
 <a href='/mainPage'>Home</a>

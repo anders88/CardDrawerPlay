@@ -15,10 +15,6 @@ public class GameStatus {
 	private Collection<Integer> discardedCards;
 	private Collection<Integer> outOfPlayCards;
 
-	public String hello() {
-		return "Game status says hello";
-	}
-
 	public String gameName() {
 		return gameName;
 	}

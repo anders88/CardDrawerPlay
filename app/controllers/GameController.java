@@ -44,7 +44,7 @@ public class GameController extends Controller {
 	public static void showGame(Long gameId) {
 		Player player = Player.findWithName(Security.connected());
 		Game game = Game.findById(gameId);
-		GameStatus gameStatus = new GameStatus();
+		GameStatus gameStatus = game.gameStatus(player);
 		render(game, player, gameStatus);
 	}
 

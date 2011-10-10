@@ -150,7 +150,8 @@ public class CardDealer {
 	}
 
 	public Set<Integer> playerCards(PlayerInfo player) {
-		return playerCards.get(player);
+		Set<Integer> result = playerCards.get(player);
+		return result != null ? result : new HashSet<Integer>();
 	}
 
 	public Set<Integer> discardedCards() {
