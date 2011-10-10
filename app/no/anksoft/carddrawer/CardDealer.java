@@ -1,6 +1,7 @@
 package no.anksoft.carddrawer;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
@@ -17,7 +18,7 @@ public class CardDealer {
 	private final int highest;
 	private CardDealerLogger cardDealerLogger;
 	
-	private Map<Player, Set<Integer>> playerCards = new Hashtable<Player, Set<Integer>>();
+	private Map<PlayerInfo, Set<Integer>> playerCards = new Hashtable<PlayerInfo, Set<Integer>>();
 
 	public CardDealer(int highest) {
 		this.highest = highest;
@@ -27,16 +28,26 @@ public class CardDealer {
 	
 	
 
-	public CardDealer(int cardsLeft, CardStatus[] cardStatus,
+	public CardDealer(CardStatus[] cardStatus,
 			CardDealerLogger cardDealerLogger,
-			Map<Player, Set<Integer>> playerCards) {
+			Map<PlayerInfo, Set<Integer>> playerCards) {
 		super();
 		this.random = new Random();
-		this.cardsLeft = cardsLeft;
 		this.cardStatus = cardStatus;
 		this.cardDealerLogger = cardDealerLogger;
 		this.playerCards = playerCards;
 		this.highest = cardStatus.length;
+		this.cardsLeft = calculateCardsLeft();
+	}
+
+
+
+	private int calculateCardsLeft() {
+		int num = highest;
+		for (Set<Integer> set : playerCards.values()) {
+			num-=set.size();
+		}
+		return num;
 	}
 
 
@@ -58,7 +69,7 @@ public class CardDealer {
 		
 	}
 
-	public int drawCard(Player player) {
+	public int drawCard(PlayerInfo player) {
 		if (cardsLeft == 0) {
 			putDiscardedCardsBackInDeck();
 			if (cardsLeft == 0) {
@@ -83,7 +94,7 @@ public class CardDealer {
 		return cardNo;
 	}
 
-	private void dealCard(Player player, int cardNo) {
+	private void dealCard(PlayerInfo player, int cardNo) {
 		Set<Integer> cardList = playerCards.get(player);
 		if (cardList == null) {
 			cardList = new HashSet<Integer>();
@@ -136,7 +147,7 @@ public class CardDealer {
 		this.cardDealerLogger = cardDealerLogger;
 	}
 
-	public Set<Integer> playerCards(Player player) {
+	public Set<Integer> playerCards(PlayerInfo player) {
 		return playerCards.get(player);
 	}
 
@@ -164,8 +175,8 @@ public class CardDealer {
 
 
 
-	public Player cardOwner(int cardNo) {
-		for (Entry<Player, Set<Integer>> entry : playerCards.entrySet()) {
+	public PlayerInfo cardOwner(int cardNo) {
+		for (Entry<PlayerInfo, Set<Integer>> entry : playerCards.entrySet()) {
 			if (entry.getValue().contains(cardNo)) {
 				return entry.getKey();
 			}

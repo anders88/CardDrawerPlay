@@ -7,11 +7,13 @@ import play.libs.Crypto;
 
 import javax.persistence.*;
 
+import no.anksoft.carddrawer.PlayerInfo;
+
 import java.math.BigDecimal;
 import java.util.*;
 
 @Entity
-public class Player extends Model {
+public class Player extends Model implements PlayerInfo {
 	@Required
 	public String name;
 	
@@ -49,5 +51,10 @@ public class Player extends Model {
 	@Override
 	public int hashCode() {
 		return name != null ? name.hashCode() : -1;
+	}
+
+	@Override
+	public String getName() {
+		return name;
 	}
 }

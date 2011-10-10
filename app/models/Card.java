@@ -18,6 +18,9 @@ public class Card extends Model {
     @ManyToOne
 	public Game game;
     
+    @ManyToOne
+    public Player player;
+    
 	public CardStatus cardStatus = CardStatus.IN_DRAW_DECK;
 
 	

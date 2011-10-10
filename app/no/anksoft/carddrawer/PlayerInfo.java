@@ -1,6 +1,6 @@
 package no.anksoft.carddrawer;
 
-public interface Player {
+public interface PlayerInfo {
 
 	String getName();
 

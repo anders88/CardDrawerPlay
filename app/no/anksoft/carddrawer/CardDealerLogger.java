@@ -2,7 +2,7 @@ package no.anksoft.carddrawer;
 
 public interface CardDealerLogger {
 
-	void drewCard(int cardNumber, Player player);
+	void drewCard(int cardNumber, PlayerInfo player);
 
 	void discardedCard(int cardNumber);
 

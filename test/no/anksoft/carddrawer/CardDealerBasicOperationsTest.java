@@ -21,7 +21,7 @@ import org.mockito.InOrder;
 public class CardDealerBasicOperationsTest {
 	private CardDealer cardDealer = new CardDealer(10);
 	private Random random = mock(Random.class);
-	private Player player = mock(Player.class);
+	private PlayerInfo player = mock(PlayerInfo.class);
 	private CardDealerLogger cardDealerLogger = mock(CardDealerLogger.class);
 
 	
@@ -44,7 +44,7 @@ public class CardDealerBasicOperationsTest {
 		when(random.nextInt(anyInt())).thenReturn(3);
 		
 		assertThat(cardDealer.drawCard(player)).isEqualTo(4);
-		Player playerTwo = mock(Player.class);
+		PlayerInfo playerTwo = mock(PlayerInfo.class);
 		
 		when(playerTwo.getName()).thenReturn("PlayerTwo");
 		assertThat(cardDealer.drawCard(playerTwo)).isEqualTo(5);

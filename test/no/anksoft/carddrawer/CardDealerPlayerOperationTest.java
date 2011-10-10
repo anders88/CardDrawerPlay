@@ -17,8 +17,8 @@ public class CardDealerPlayerOperationTest {
 	private Random random = mock(Random.class);
 	private CardDealerLogger cardDealerLogger = mock(CardDealerLogger.class);
 	
-	private Player mockPlayer(String name) {
-		Player mock = mock(Player.class);
+	private PlayerInfo mockPlayer(String name) {
+		PlayerInfo mock = mock(PlayerInfo.class);
 		when(mock.getName()).thenReturn(name);
 		return mock;
 	}
@@ -26,8 +26,8 @@ public class CardDealerPlayerOperationTest {
 	@Test
 	public void shouldKeepTrackOfDrawnCards() throws Exception {
 		when(random.nextInt(anyInt())).thenReturn(0);
-		Player playerOne = mockPlayer("PlayerOne");
-		Player playerTwo = mockPlayer("PlayerTwo");
+		PlayerInfo playerOne = mockPlayer("PlayerOne");
+		PlayerInfo playerTwo = mockPlayer("PlayerTwo");
 
 		cardDealer.drawCard(playerOne);
 		cardDealer.drawCard(playerTwo);
@@ -40,7 +40,7 @@ public class CardDealerPlayerOperationTest {
 	@Test
 	public void shouldHandleDiscardedCards() throws Exception {
 		when(random.nextInt(anyInt())).thenReturn(0);
-		Player playerOne = mockPlayer("PlayerOne");
+		PlayerInfo playerOne = mockPlayer("PlayerOne");
 
 		cardDealer.drawCard(playerOne);
 		cardDealer.drawCard(playerOne);
@@ -55,8 +55,8 @@ public class CardDealerPlayerOperationTest {
 	
 	@Test
 	public void shouldIndicateCorrectOwnerOfCard() throws Exception {
-		Player playerOne = mockPlayer("PlayerOne");
-		Player playerTwo = mockPlayer("PlayerTwo");
+		PlayerInfo playerOne = mockPlayer("PlayerOne");
+		PlayerInfo playerTwo = mockPlayer("PlayerTwo");
 		when(random.nextInt(anyInt())).thenReturn(0);
 		
 		cardDealer.drawCard(playerOne);

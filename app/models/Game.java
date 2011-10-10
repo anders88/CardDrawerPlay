@@ -5,6 +5,11 @@ import play.db.jpa.*;
 
 import javax.persistence.*;
 
+import no.anksoft.carddrawer.CardDealer;
+import no.anksoft.carddrawer.CardDealerLogger;
+import no.anksoft.carddrawer.CardStatus;
+import no.anksoft.carddrawer.PlayerInfo;
+
 import controllers.GameStatus;
 
 import java.util.*;
@@ -38,5 +43,29 @@ public class Game extends Model {
 
 	public GameStatus gameStatus(Player player) {
 		return GameStatus.create(this,player);
+	}
+
+	public CardDealer setupDealer(CardDealerLogger cardDealerLogger) {
+		CardStatus[] cardStatus = new CardStatus[numberOfCards];
+		Map<PlayerInfo, Set<Integer>> playerCards = new HashMap<PlayerInfo, Set<Integer>>();
+		
+		for (Card card : cards) {
+			cardStatus[card.cardNumber-1] = card.cardStatus;
+			if (card.cardStatus == CardStatus.DRAWN) {
+				findOrCreate(playerCards,card.player).add(card.cardNumber);
+			}
+		}
+		
+		return new CardDealer(cardStatus, cardDealerLogger, playerCards );
+	}
+
+	private Set<Integer> findOrCreate(
+			Map<PlayerInfo, Set<Integer>> playerCards, Player player) {
+		Set<Integer> set = playerCards.get(player);
+		if (set == null) {
+			set = new HashSet<Integer>();
+			playerCards.put(player, set);
+		}
+		return set;
 	}
 }
