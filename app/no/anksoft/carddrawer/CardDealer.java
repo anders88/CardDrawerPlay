@@ -1,8 +1,10 @@
 package no.anksoft.carddrawer;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
@@ -22,6 +24,22 @@ public class CardDealer {
 		this.cardsLeft = highest;
 		this.cardStatus = initCardStatus(highest);
 	}
+	
+	
+
+	public CardDealer(int cardsLeft, CardStatus[] cardStatus,
+			CardDealerLogger cardDealerLogger,
+			Map<Player, Set<Integer>> playerCards) {
+		super();
+		this.random = new Random();
+		this.cardsLeft = cardsLeft;
+		this.cardStatus = cardStatus;
+		this.cardDealerLogger = cardDealerLogger;
+		this.playerCards = playerCards;
+		this.highest = cardStatus.length;
+	}
+
+
 
 	private CardStatus[] initCardStatus(int highest) {
 		CardStatus[] result = new CardStatus[highest];
@@ -142,6 +160,17 @@ public class CardDealer {
 			}
 		}
 		return discarded;
+	}
+
+
+
+	public Player cardOwner(int cardNo) {
+		for (Entry<Player, Set<Integer>> entry : playerCards.entrySet()) {
+			if (entry.getValue().contains(cardNo)) {
+				return entry.getKey();
+			}
+		}
+		return null;
 	}
 
 

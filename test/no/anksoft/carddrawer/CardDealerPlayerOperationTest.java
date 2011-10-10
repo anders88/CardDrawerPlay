@@ -52,6 +52,21 @@ public class CardDealerPlayerOperationTest {
 		assertThat(cardDealer.playerCards(playerOne)).containsOnly(1);
 
 	}
+	
+	@Test
+	public void shouldIndicateCorrectOwnerOfCard() throws Exception {
+		Player playerOne = mockPlayer("PlayerOne");
+		Player playerTwo = mockPlayer("PlayerTwo");
+		when(random.nextInt(anyInt())).thenReturn(0);
+		
+		cardDealer.drawCard(playerOne);
+		cardDealer.drawCard(playerTwo);
+		
+		assertThat(cardDealer.cardOwner(1)).isEqualTo(playerOne);
+		assertThat(cardDealer.cardOwner(2)).isEqualTo(playerTwo);
+		assertThat(cardDealer.cardOwner(3)).isNull();
+		
+	}
 
 
 	@Before
