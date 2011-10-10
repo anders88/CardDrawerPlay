@@ -79,6 +79,7 @@ public class Game extends Model {
 				cardOwner = Player.findWithName(playerInfo.getName());
 			}
 			card.player = cardOwner;
+			card.save();
 		}
 		
 	}

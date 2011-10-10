@@ -2,6 +2,9 @@ package controllers;
 
 import java.util.List;
 
+import no.anksoft.carddrawer.CardDealer;
+
+import models.DbCardDealerLogger;
 import models.Game;
 import models.Player;
 import controllers.Secure;
@@ -46,6 +49,15 @@ public class GameController extends Controller {
 		Game game = Game.findById(gameId);
 		GameStatus gameStatus = game.gameStatus(player);
 		render(game, player, gameStatus);
+	}
+	
+	public static void drawCard(Long gameId) {
+		Player player = Player.findWithName(Security.connected());
+		Game game = Game.findById(gameId);
+		CardDealer dealer = game.setupDealer(DbCardDealerLogger.INSTANCE);
+		dealer.drawCard(player);
+		game.updateCards(dealer);
+		showGame(gameId);
 	}
 
 }

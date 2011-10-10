@@ -14,5 +14,10 @@ Cards left in drawpile ${gameStatus.cardsInDrawpile()}
     #{/list}
 </ul>
 
-<br/>
-<a href='/mainPage'>Home</a>
+<h2>Actions</h2>
+<form action='@{GameController.drawCard()}' method='POST'>
+	<input type='hidden' name='gameId' id='gameId' value='${game.id}'/>
+	<input type='submit' name='drawCard' value='Draw a card'/>
+</form>
+
+<br/><a href='/mainPage'>Home</a>
