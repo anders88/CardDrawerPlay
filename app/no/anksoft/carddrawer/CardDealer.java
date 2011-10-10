@@ -176,6 +176,9 @@ public class CardDealer {
 
 
 	public PlayerInfo cardOwner(int cardNo) {
+		if (cardStatus[cardNo-1] != CardStatus.DRAWN) {
+			return null;
+		}
 		for (Entry<PlayerInfo, Set<Integer>> entry : playerCards.entrySet()) {
 			if (entry.getValue().contains(cardNo)) {
 				return entry.getKey();
@@ -183,8 +186,11 @@ public class CardDealer {
 		}
 		return null;
 	}
-
-
+	
+	public CardStatus getCardStatus(int cardNumber) {
+		return cardStatus[cardNumber-1];
+	}
+	
 
 
 }

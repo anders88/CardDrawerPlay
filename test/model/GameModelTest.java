@@ -2,6 +2,7 @@ package model;
 
 import static org.mockito.Mockito.mock;
 
+import java.util.Collection;
 import java.util.Set;
 
 import models.Card;
@@ -35,10 +36,19 @@ public class GameModelTest extends UnitTest {
 	@Test
 	public void shouldDeliverCorrectGameStatusOnStartup() throws Exception {
 		Game game = Game.start("TestGame", 10);
-		Player player = Player.create("Player1", "pw");
-		GameStatus gameStatus = game.gameStatus(player);
+		Player player = Player.create("Player1", "pw").save();
 		
+		CardDealer cardDealer = game.setupDealer(mock(CardDealerLogger.class));
+		int drawnCard = cardDealer.drawCard(player);
+		
+		game.updateCards(cardDealer);
+		
+		GameStatus gameStatus = game.gameStatus(player);
 		assertEquals("TestGame", gameStatus.gameName());
+		assertEquals(9, gameStatus.cardsInDrawpile());
+		Collection<Integer> playerCards = gameStatus.playerCards();
+		assertEquals(1, playerCards.size());
+		assertTrue(playerCards.contains(drawnCard));
 		
 	}
 	

@@ -42,7 +42,8 @@ public class Game extends Model {
 	}
 
 	public GameStatus gameStatus(Player player) {
-		return GameStatus.create(this,player);
+		CardDealer cardDealer = setupDealer(DbCardDealerLogger.INSTANCE);
+		return GameStatus.create(this,player,cardDealer);
 	}
 
 	public CardDealer setupDealer(CardDealerLogger cardDealerLogger) {
@@ -67,5 +68,18 @@ public class Game extends Model {
 			playerCards.put(player, set);
 		}
 		return set;
+	}
+
+	public void updateCards(CardDealer cardDealer) {
+		for (Card card : cards) {
+			card.cardStatus = cardDealer.getCardStatus(card.cardNumber);
+			PlayerInfo playerInfo = cardDealer.cardOwner(card.cardNumber);
+			Player cardOwner = null;
+			if (playerInfo != null) {
+				cardOwner = Player.findWithName(playerInfo.getName());
+			}
+			card.player = cardOwner;
+		}
+		
 	}
 }
