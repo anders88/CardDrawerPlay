@@ -5,6 +5,9 @@ import play.data.validation.Required;
 import play.db.jpa.*;
 
 import javax.persistence.*;
+
+import no.anksoft.carddrawer.CardStatus;
+
 import java.util.*;
 
 @Entity
@@ -15,7 +18,7 @@ public class Card extends Model {
     @ManyToOne
 	public Game game;
     
-	public CardStatus cardStatus = CardStatus.IN_DRAWPILE;
+	public CardStatus cardStatus = CardStatus.IN_DRAW_DECK;
 
 	
 	public static Card create(Game game, int cardNumber) {

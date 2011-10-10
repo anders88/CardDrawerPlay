@@ -32,4 +32,22 @@ public class Player extends Model {
 	public boolean validatePassword(String givenPassword) {
 		return password.equals(Crypto.passwordHash(givenPassword));
 	}
+	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Player)) {
+			return false;
+		}
+		return nullSafeEquals(name, ((Player) obj).name);
+	}
+
+	private static <T> boolean nullSafeEquals(T a, T b) {
+		return (a != null) ? a.equals(b) : b != null;
+	}
+	
+	@Override
+	public int hashCode() {
+		return name != null ? name.hashCode() : -1;
+	}
 }

@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Set;
 
 import models.Card;
-import models.CardStatus;
 import models.Game;
+import no.anksoft.carddrawer.CardStatus;
 
 import org.junit.After;
 import org.junit.Before;
@@ -38,7 +38,7 @@ public class CardModelTest extends UnitTest {
 		assertEquals(5, gameOne.cards.size());
 		
 		List<Card> allCards = Card.findAll();
-		assertEquals(CardStatus.IN_DRAWPILE, allCards.get(0).cardStatus); 
+		assertEquals(CardStatus.IN_DRAW_DECK, allCards.get(0).cardStatus); 
 	}
 
 }
