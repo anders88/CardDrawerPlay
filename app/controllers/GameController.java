@@ -8,6 +8,7 @@ import models.DbCardDealerLogger;
 import models.Game;
 import models.Player;
 import no.anksoft.carddrawer.CardDealer;
+import play.db.jpa.JPABase;
 import play.mvc.Controller;
 import play.mvc.With;
 import controllers.Secure.Security;
@@ -100,9 +101,18 @@ public class GameController extends Controller {
 		return true;
 	}
 	
-	public static void gameInfo() {
-		String secStr = "Second " + Calendar.getInstance().get(Calendar.SECOND);
-		render(secStr);
+	public static void gameInfo(Long gameId) {
+		
+		Player player = Player.findWithName(Security.connected());
+		Game game;
+		if (gameId == null) {
+			List<Game> findAll = Game.findAll();
+			game = findAll.get(0);
+		} else {
+			game = Game.findById(gameId);
+		}
+		GameStatus gameStatus = game.gameStatus(player);
+		render(gameStatus);
 	}
 
 }
