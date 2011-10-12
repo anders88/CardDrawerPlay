@@ -10,6 +10,9 @@ GET		/mainPage								GameController.index
 GET		/createGamePage							GameController.createGamePage
 GET		/createPlayer							Application.playerCreation
 
+# Import CRUD routes
+*      /admin              module:crud
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

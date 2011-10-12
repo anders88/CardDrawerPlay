@@ -31,4 +31,10 @@ public class Card extends Model {
 		game.cards.add(card);
 		return card;
 	}
+	
+	@Override
+	public String toString() {
+		return "Card<" + cardNumber + " : " + cardStatus + " (Game " + game.id + ")>";
+	}
+	
 }
