@@ -28,6 +28,10 @@ public class GameController extends Controller {
 		render();
 	}
 
+	public static void doAdmin() {
+        render("CRUD/index.html");
+	}
+
 	public static void createGame(String gameName, Integer numberOfCards) {
 		validation.required(gameName).message("Name is required");
 		validation.required(numberOfCards).message(

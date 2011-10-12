@@ -57,4 +57,9 @@ public class Player extends Model implements PlayerInfo {
 	public String getName() {
 		return name;
 	}
+	
+	@Override
+	public String toString() {
+		return "Player<" + id + "-" + name + ">";
+	}
 }
