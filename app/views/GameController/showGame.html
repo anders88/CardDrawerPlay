@@ -1,25 +1,23 @@
 #{extends 'main.html' /}
 #{set title:'showGame.html' /}
 
+<script type="text/javascript">
+   var auto_refresh = setInterval(
+	function ()
+	{
+	$('#info').load('/gamecontroller/gameinfo');
+	}, 3000);
+   
+</script>
+
 <h1>${player.name} - ${game.name}</h1>
 
 Cards left in drawpile ${gameStatus.cardsInDrawpile()}
 
-<h2>Your cards</h2>
-    #{list items:gameStatus.playerCards(), as:'playerCard' }
-    	${playerCard},
-    #{/list}
+<h2>Autoload her</h2>
 
-<h2>Discarded cards</h2>
-    #{list items:gameStatus.discardedCards(), as:'discardedCard' }
-    	${discardedCard},
-    #{/list}
-
-<h2>Out of play cards</h2>
-    #{list items:gameStatus.outOfPlayCards(), as:'oopCard' }
-    	${oopCard},
-    #{/list}
-
+<div id='info'>
+</div>
 
 <h2>Actions</h2>
 #{ifErrors}

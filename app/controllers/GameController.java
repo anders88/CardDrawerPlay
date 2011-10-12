@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import models.DbCardDealerLogger;
@@ -96,6 +98,11 @@ public class GameController extends Controller {
 			return false;
 		}
 		return true;
+	}
+	
+	public static void gameInfo() {
+		String secStr = "Second " + Calendar.getInstance().get(Calendar.SECOND);
+		render(secStr);
 	}
 
 }
