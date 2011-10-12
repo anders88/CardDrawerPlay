@@ -1,0 +1,10 @@
+#{extends 'main.html' /}
+#{set title:'showEventLog.html' /}
+
+<h1>Event log</h1>
+
+<ul>
+#{list items:log, as:'logEntry' }
+	<li>${logEntry}</li>
+#{/list}
+</ul>

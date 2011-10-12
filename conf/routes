@@ -9,6 +9,7 @@ GET		/mainPage								GameController.index
 
 GET		/createGamePage							GameController.createGamePage
 GET		/createPlayer							Application.playerCreation
+GET		/eventLog								GaneController.showEventLog
 GET		/admin									GameController.doAdmin
 
 # Ignore favicon requests

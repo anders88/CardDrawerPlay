@@ -10,25 +10,23 @@ public class DbCardDealerLogger implements CardDealerLogger {
 
 	@Override
 	public void drewCard(int cardNumber, PlayerInfo player) {
-
+		EventLog.log(player.getName() + " drew card");
 	}
 
 	@Override
 	public void discardedCard(int cardNumber) {
-		// TODO Auto-generated method stub
+		EventLog.log("Card discarded: " + cardNumber);
 
 	}
 
 	@Override
 	public void putCardOutOfPlay(int cardNumber) {
-		// TODO Auto-generated method stub
-
+		EventLog.log("Card put out of play: " + cardNumber);
 	}
 
 	@Override
 	public void shuffledDiscardPileIntoDrawPile() {
-		// TODO Auto-generated method stub
-
+		EventLog.log("Shuffled discard pile into draw pile");
 	}
 
 }

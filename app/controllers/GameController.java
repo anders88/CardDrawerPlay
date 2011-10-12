@@ -1,10 +1,15 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import models.DbCardDealerLogger;
+import models.EventLog;
 import models.Game;
 import models.Player;
 import no.anksoft.carddrawer.CardDealer;
@@ -29,7 +34,13 @@ public class GameController extends Controller {
 	}
 
 	public static void doAdmin() {
+		EventLog.log(Security.connected() + " entered admin pages");
         render("CRUD/index.html");
+	}
+
+	public static void showEventLog() {
+		List<String> log = formatLog(EventLog.getLatestLoggings(100));
+		render(log);
 	}
 
 	public static void createGame(String gameName, Integer numberOfCards) {
@@ -46,6 +57,7 @@ public class GameController extends Controller {
 		} else {
 			Game game = Game.start(gameName, numberOfCards);
 			game.save();
+			EventLog.log("Game started " + game.name + " - cards " + numberOfCards);
 			index();
 		}
 	}
@@ -118,5 +130,15 @@ public class GameController extends Controller {
 		GameStatus gameStatus = game.gameStatus(player);
 		render(gameStatus);
 	}
-
+	
+	private static List<String> formatLog(List<EventLog> log) {
+		List<String> result = new ArrayList<String>();
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm:ss");
+		for (EventLog eventLog : log) {
+			result.add(formatter.print(eventLog.eventTime) + " : " + eventLog.description);
+		}
+		
+		return result;
+	}
+ 
 }
