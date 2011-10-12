@@ -2,14 +2,13 @@ package controllers;
 
 import java.util.List;
 
-import no.anksoft.carddrawer.CardDealer;
-
 import models.DbCardDealerLogger;
 import models.Game;
 import models.Player;
-import controllers.Secure;
+import no.anksoft.carddrawer.CardDealer;
+import play.mvc.Controller;
+import play.mvc.With;
 import controllers.Secure.Security;
-import play.mvc.*;
 
 @With(Secure.class)
 public class GameController extends Controller {
@@ -58,6 +57,45 @@ public class GameController extends Controller {
 		dealer.drawCard(player);
 		game.updateCards(dealer);
 		showGame(gameId);
+	}
+	
+	public static void discardCard(Long gameId, Integer cardNumber) {
+		Game game = Game.findById(gameId);
+		
+		if (validateCardNumber(game,cardNumber)) {
+			CardDealer dealer = game.setupDealer(DbCardDealerLogger.INSTANCE);
+			dealer.discardCard(cardNumber);
+			game.updateCards(dealer);
+		}
+		
+		showGame(gameId);
+	}
+	
+	public static void putCardOutOfPlay(Long gameId, Integer cardNumber) {
+		Game game = Game.findById(gameId);
+		
+		if (validateCardNumber(game,cardNumber)) {
+			CardDealer dealer = game.setupDealer(DbCardDealerLogger.INSTANCE);
+			dealer.putCardOutOfPlay(cardNumber);
+			game.updateCards(dealer);
+		}
+		
+		showGame(gameId);
+	}
+
+	private static boolean validateCardNumber(Game game, Integer cardNumber) {
+		validation.required(cardNumber).message(
+				"Card number is required");
+		validation.range(cardNumber, 1, game.numberOfCards).message(
+				"Number of cards must be between 1 and " + game.numberOfCards + " was "
+						+ cardNumber);
+		
+		if (validation.hasErrors()) {
+			params.flash();
+			validation.keep();
+			return false;
+		}
+		return true;
 	}
 
 }
