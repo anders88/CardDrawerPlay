@@ -99,5 +99,24 @@ public class Game extends Model {
 		}
 		return null;
 	}
+
+	public void updateNumberOfCards(int newNumberOfCards) {
+		if (newNumberOfCards < 1) {
+			throw new IllegalArgumentException("Illegal number of cards " + newNumberOfCards);
+		}
+		int oldNumberOfCards = numberOfCards;
+		numberOfCards = newNumberOfCards;
+		save();
+		
+		for (int newCardNumber=oldNumberOfCards+1;newCardNumber<=newNumberOfCards;newCardNumber++) {
+			cards.add(Card.create(this, newCardNumber));
+			save();
+		}
+
+		for (int deleteCardNumber=newNumberOfCards+1;deleteCardNumber<=oldNumberOfCards;deleteCardNumber++) {
+			removeCard(deleteCardNumber);
+		}
+		
+	}
 	
 }

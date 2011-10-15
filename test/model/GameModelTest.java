@@ -86,5 +86,25 @@ public class GameModelTest extends UnitTest {
 		
 		assertEquals(player, dealer.cardOwner(3));
 	}
+	
+	@Test
+	public void shouldIncreseNumberOfCardsInGame() throws Exception {
+		Game game = Game.start("TestGame", 5);
+		game.updateNumberOfCards(6);
+		
+		Card newCard = findCard(Game.<Game>findById(game.id), 6);
+		
+		assertNotNull(newCard);
+		assertEquals(CardStatus.IN_DRAW_DECK, newCard.cardStatus);
+	}
+	
+	@Test
+	public void shouldDecreseNumberOfCardsInGame() throws Exception {
+		Game game = Game.start("TestGame", 5);
+		game.updateNumberOfCards(4);
+		
+		assertEquals(4, Game.<Game>findById(game.id).cards.size());
+		assertEquals(4, Card.count());
+	}
 }
 
