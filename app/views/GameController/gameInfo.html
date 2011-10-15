@@ -1,5 +1,11 @@
 Total number of cards  ${gameStatus.totalNumberOfCards()}<br/>
 Cards left in drawpile ${gameStatus.cardsInDrawpile()}
+<h2>Last dice throws</h2>
+<ul>
+#{list items:diceThrowInfo, as:'diceThrow' }
+<li>${diceThrow}</li>
+#{/list}
+</ul>
 <h2>Your cards</h2>
     #{list items:gameStatus.playerCards(), as:'playerCard' }
     	${playerCard},

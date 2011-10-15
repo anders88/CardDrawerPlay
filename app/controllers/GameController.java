@@ -3,8 +3,11 @@ package controllers;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
+import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -13,6 +16,7 @@ import models.EventLog;
 import models.Game;
 import models.Player;
 import no.anksoft.carddrawer.CardDealer;
+import play.cache.Cache;
 import play.db.jpa.JPABase;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -20,6 +24,10 @@ import controllers.Secure.Security;
 
 @With(Secure.class)
 public class GameController extends Controller {
+	
+	private static LinkedList<String> diceThrows = new LinkedList<String>();
+	private static Random random = new Random();
+
 	public static void index() {
 		if (Security.isConnected()) {
 			String username = Security.connected();
@@ -66,9 +74,14 @@ public class GameController extends Controller {
 		Player player = Player.findWithName(Security.connected());
 		Game game = Game.findById(gameId);
 		GameStatus gameStatus = game.gameStatus(player);
-		render(game, player, gameStatus);
+		List<String> diceThrowInfo=getDiceThrows();
+		render(game, player, gameStatus, diceThrowInfo);
 	}
 	
+	private static LinkedList<String> getDiceThrows() {
+		return diceThrows;
+	}
+
 	public static void drawCard(Long gameId) {
 		Player player = Player.findWithName(Security.connected());
 		Game game = Game.findById(gameId);
@@ -128,17 +141,22 @@ public class GameController extends Controller {
 			game = Game.findById(gameId);
 		}
 		GameStatus gameStatus = game.gameStatus(player);
-		render(gameStatus);
+		List<String> diceThrowInfo=getDiceThrows();
+		render(gameStatus,diceThrowInfo);
 	}
 	
 	private static List<String> formatLog(List<EventLog> log) {
 		List<String> result = new ArrayList<String>();
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm:ss");
 		for (EventLog eventLog : log) {
-			result.add(formatter.print(eventLog.eventTime) + " : " + eventLog.description);
+			result.add(formatTime(eventLog.eventTime) + " : " + eventLog.description);
 		}
 		
 		return result;
+	}
+
+	private static String formatTime(LocalDateTime time) {
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm:ss");
+		return formatter.print(time);
 	}
 	
 	public static void updateNumberOfCards(Long gameId, Integer numberOfCards) {
@@ -155,6 +173,14 @@ public class GameController extends Controller {
 			game.updateNumberOfCards(numberOfCards);
 			EventLog.log(Security.connected() + " updated number of cards to " + numberOfCards);
 		}
+		showGame(gameId);
+	}
+	
+	public static void throwDice(Long gameId) {
+		int diceThrowNumber=random.nextInt(6)+1;
+		if (diceThrows.size() > 2) diceThrows.pop();
+		String diceThrow = formatTime(new LocalDateTime()) + " - "  + Security.connected() + " threw dice " + diceThrowNumber;
+		diceThrows.addLast(diceThrow);
 		showGame(gameId);
 	}
  
