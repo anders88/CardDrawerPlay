@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import play.cache.Cache;
 import play.db.jpa.JPABase;
 import play.test.Fixtures;
 import play.test.UnitTest;
@@ -39,6 +40,20 @@ public class CardModelTest extends UnitTest {
 		
 		List<Card> allCards = Card.findAll();
 		assertEquals(CardStatus.IN_DRAW_DECK, allCards.get(0).cardStatus); 
+	}
+	
+	@Test
+	public void shouldDeleteCard() throws Exception {
+		Game gameOne = Game.start("GameOne", 5);
+
+		assertEquals(5,gameOne.cards.size());
+		assertEquals(5, Card.findAll().size());
+		
+		gameOne.removeCard(3);
+		
+		assertEquals(4,Game.<Game>findById(gameOne.id).cards.size());
+		assertEquals(4, Card.findAll().size());
+		
 	}
 
 }

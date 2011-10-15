@@ -36,5 +36,24 @@ public class Card extends Model {
 	public String toString() {
 		return "Card<" + cardNumber + " : " + cardStatus + " (Game " + game.id + ")>";
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Card)) {
+			return false;
+		}
+		Card other = (Card) obj;
+		return nullSafeEquals(cardNumber, other.cardNumber) &&
+				nullSafeEquals(game, other.game);
+	}
+
+	private static <T> boolean nullSafeEquals(T a, T b) {
+		return (a != null) ? a.equals(b) : b != null;
+	}
+	
+	@Override
+	public int hashCode() {
+		return new Integer(cardNumber).hashCode();
+	}
 	
 }

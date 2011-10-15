@@ -83,4 +83,21 @@ public class Game extends Model {
 		}
 		
 	}
+
+	public void removeCard(int cardNumber) {
+		Card card = findCard(cardNumber);
+		cards.remove(card);
+		save();
+		Card.<Card>findById(card.id).delete();
+	}
+
+	private Card findCard(int cardNumber) {
+		for (Card card : cards) {
+			if (card.cardNumber == cardNumber) {
+				return card;
+			}
+		}
+		return null;
+	}
+	
 }
