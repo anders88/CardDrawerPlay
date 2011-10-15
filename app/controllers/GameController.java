@@ -140,5 +140,22 @@ public class GameController extends Controller {
 		
 		return result;
 	}
+	
+	public static void updateNumberOfCards(Long gameId, Integer numberOfCards) {
+		validation.required(numberOfCards).message(
+				"Number of cards is required");
+		validation.range(numberOfCards, 1, 100).message(
+				"Number of cards must be between 1 and 100 was "
+						+ numberOfCards);
+		if (validation.hasErrors()) {
+			params.flash();
+			validation.keep();
+		} else {
+			Game game = Game.findById(gameId);
+			game.updateNumberOfCards(numberOfCards);
+			EventLog.log(Security.connected() + " updated number of cards to " + numberOfCards);
+		}
+		showGame(gameId);
+	}
  
 }

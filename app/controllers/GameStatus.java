@@ -18,6 +18,7 @@ public class GameStatus {
 	private SortedSet<Integer> playerCards;
 	private SortedSet<Integer> discardedCards;
 	private SortedSet<Integer> outOfPlayCards;
+	private int totalNumberOfCards;
 
 	public String gameName() {
 		return gameName;
@@ -30,7 +31,7 @@ public class GameStatus {
 		gameStatus.playerCards = new TreeSet<Integer>(cardDealer.playerCards(player));
 		gameStatus.discardedCards = new TreeSet<Integer>(cardDealer.discardedCards());
 		gameStatus.outOfPlayCards = new TreeSet<Integer>(cardDealer.outOfPlayCards());
-		
+		gameStatus.totalNumberOfCards = game.numberOfCards;
 		return gameStatus;
 	}
 
@@ -48,5 +49,9 @@ public class GameStatus {
 
 	public Collection<Integer> outOfPlayCards() {
 		return outOfPlayCards;
+	}
+	
+	public int totalNumberOfCards() {
+		return totalNumberOfCards;
 	}
 }

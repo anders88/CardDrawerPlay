@@ -13,6 +13,7 @@
 <h1>${player.name} - ${game.name}</h1>
 
 <div id='info'>
+    Total number of cards  ${gameStatus.totalNumberOfCards()}<br/>
 	Cards left in drawpile ${gameStatus.cardsInDrawpile()}
 	<h2>Your cards</h2>
 	    #{list items:gameStatus.playerCards(), as:'playerCard' }
@@ -32,9 +33,11 @@
 
 <h2>Actions</h2>
 #{ifErrors}
+   <ul>
    #{errors}
        <li style="color:#c00">${error}</li>
    #{/errors}
+   </ul>
    <br/>
 #{/ifErrors}
 
@@ -54,6 +57,13 @@
 	<input type='number' id='cardNumber' name='cardNumber' />
 	<input type='submit' name='putCardOutOfPlay' value='Put card out of play' />
 </form>
+<br/>
+<form action='@{GameController.updateNumberOfCards()}' method='POST'>
+	<input type='hidden' name='gameId' id='gameId' value='${game.id}' />
+	<input type='number' id='numberOfCards' name='numberOfCards' />
+	<input type='submit' name='putCardOutOfPlay' value='Update number of cards' />
+</form>
+
 
 <br/><a href="/GameController/showEventLog">Log</a>
 <br/><a href='/mainPage'>Home</a>
