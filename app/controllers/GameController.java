@@ -55,8 +55,8 @@ public class GameController extends Controller {
 		validation.required(gameName).message("Name is required");
 		validation.required(numberOfCards).message(
 				"Number of cards is required");
-		validation.range(numberOfCards, 1, 100).message(
-				"Number of cards must be between 1 and 100 was "
+		validation.range(numberOfCards, 1, 300).message(
+				"Number of cards must be between 1 and 300 was "
 						+ numberOfCards);
 		if (validation.hasErrors()) {
 			params.flash();
@@ -162,8 +162,8 @@ public class GameController extends Controller {
 	public static void updateNumberOfCards(Long gameId, Integer numberOfCards) {
 		validation.required(numberOfCards).message(
 				"Number of cards is required");
-		validation.range(numberOfCards, 1, 100).message(
-				"Number of cards must be between 1 and 100 was "
+		validation.range(numberOfCards, 1, 300).message(
+				"Number of cards must be between 1 and 300 was "
 						+ numberOfCards);
 		if (validation.hasErrors()) {
 			params.flash();
